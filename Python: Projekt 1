@@ -1,0 +1,153 @@
+'''
+projekt_1.py: první projekt do Engeto Online Python Akademie
+
+author: Lucie Ihnatoliova
+email: lih48279@gmail.com
+discord: Lucie I#2395
+'''
+
+
+TEXTS = ['''
+Situated about 10 miles west of Kemmerer,
+Fossil Butte is a ruggedly impressive
+topographic feature that rises sharply
+some 1000 feet above Twin Creek Valley
+to an elevation of more than 7500 feet
+above sea level. The butte is located just
+north of US 30N and the Union Pacific Railroad,
+which traverse the valley. ''',
+'''At the base of Fossil Butte are the bright
+red, purple, yellow and gray beds of the Wasatch
+Formation. Eroded portions of these horizontal
+beds slope gradually upward from the valley floor
+and steepen abruptly. Overlying them and extending
+to the top of the butte are the much steeper
+buff-to-white beds of the Green River Formation,
+which are about 300 feet thick.''',
+'''The monument contains 8198 acres and protects
+a portion of the largest deposit of freshwater fish
+fossils in the world. The richest fossil fish deposits
+are found in multiple limestone layers, which lie some
+100 feet below the top of the butte. The fossils
+represent several varieties of perch, as well as
+other freshwater genera and herring similar to those
+in modern oceans. Other fish such as paddlefish,
+garpike and stingray are also present.'''
+]
+
+accounts = {
+    "Bob": "123", 
+    "Ann": "pass123", 
+    "Mike": "password123", 
+    "Liz": "pass123"
+    }
+
+line = '-' * 57
+
+# #TODO LOGIN----------------------------------------------------------------
+print("LOGIN")
+username = input("Please enter your name:")
+password = input("Please enter your password:")
+print(line)
+for name in accounts:
+    if name == username:
+        if password == accounts[name]:
+            print(f"Welcome to the app, {username}!\nWe have 3 texts to be analyzed.")
+        elif password not in accounts:
+            print(f"User not registered! Terminating the program...")
+            print(line)
+            quit()
+    elif username not in accounts:
+            print(f"User not registered! Terminating the program...")
+            quit()
+
+#TODO pick a text----------------------------------------------------------
+analyzed_text = input("Please pick a text between 1 and 3: ")
+if analyzed_text.isdigit() == False:
+    print("Text do not exist!")
+    quit()
+elif int(analyzed_text) < 1 or int(analyzed_text) > 4:
+    print("Text do not exist!")
+    quit()
+else:
+    print(line)
+
+#TODO clean_text the words--------------------------------------------------
+clean_text = []  #vycistena_slova
+selected = TEXTS[int(analyzed_text) - 1]
+
+for slovo in selected.split():
+    ciste_slovo = slovo.strip(".,!?")
+    clean_text.append(ciste_slovo)
+
+# TODO number of words ------------------------------------------------
+pocet_slov = len(selected.split())
+print(f"There are {pocet_slov} words in the selected text.")
+
+# TODO titlecase words-------------------------------------------------
+titlecase = 0
+for title in clean_text:
+    if title[0].istitle():
+        titlecase += 1
+print(f"There are {titlecase} titlecase words.")
+
+# TODO uppercase words-------------------------------------------------
+uppercase = 0
+for upper in clean_text:
+    if upper.isupper() and upper.isalpha():
+        uppercase += 1
+if uppercase > 1:
+    print(f"There are {uppercase} uppercase words.")
+elif uppercase == 1:
+    print(f"There is {uppercase} uppercase word.")
+elif uppercase == 0:
+    print(f"There is no uppercase word.")
+# TODO lowercase words-------------------------------------------------
+lowercase = 0
+for lower in clean_text:
+    if lower[0].islower():
+        lowercase += 1
+print(f"There are {lowercase} lowercase words.")
+
+# TODO number of numeric strings---------------------------------------
+numeric_string = 0 
+for numeric in clean_text:
+    if numeric.isnumeric():
+        numeric_string += 1
+        if numeric_string > 1:
+            print(f"There are {numeric_string} numeric strings.")
+        elif numeric_string == 1:
+            print(f"There is {numeric_string} numeric string.")
+
+# TODO sum of all numbers----------------------------------------------
+totalsum= list()
+
+for number in clean_text:
+    if number.isnumeric():
+        totalsum.append(int(number))
+print(f"The sum of all the numbers is {sum(totalsum)}.")
+
+print(line)
+print(f"{'LEN'} |{'OCCURENCES' : <18} |NR.")
+print(line)
+
+#TODO word_len_occur of word lenghts----------------------------------------
+word_len_occur = []
+for occur in clean_text:
+    lenght = (len(occur))
+    word_len_occur.append(lenght)
+#print(word_len_occur)
+
+counts = {}
+for x in word_len_occur:
+    if x not in counts:
+        counts[x] = 1
+    else:
+        counts[x] += 1
+#print(counts)
+
+#TODO final graph
+for value, key in sorted(counts.items()):
+    print(f"{value : <3} |{key * '*' : <18} |{key}")
+
+
